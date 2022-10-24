@@ -1,7 +1,6 @@
 
 //Basic Program for learning collaction class And Switch
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -62,43 +61,65 @@ public class MenuProgram {
 
     }
 
-    // Method For Checking Order And  Bill
+    // Method For Checking Order And Bill
 
     void Checkorder(LinkedList<MenuCard> Order) {
         int cost = 0;
         System.out.println("\n \n \n");
         System.out.println("##########################################\n");
+        if (Order.size() == 0) {
+            System.out.println(ANSI_RED + "You dont have any order" +ANSI_RESET);
+        } else {
+            for (MenuCard odc : Order) {
+                System.out.println(ANSI_YELLOW + "Dish :" + odc.DishName + ANSI_RESET + " ---- " + ANSI_RED + "Price :"
+                        + odc.Price + ANSI_RESET);
+                cost += odc.Price;
+            }
+            System.out.println("\n" + ANSI_RED + "Total Cost  = " + cost + ANSI_RESET);
 
-        for (MenuCard odc : Order) {
-            System.out.println(ANSI_YELLOW + "Dish :" + odc.DishName + ANSI_RESET + " ---- " + ANSI_RED + "Price :"
-                    + odc.Price + ANSI_RESET);
-            cost += odc.Price;
         }
-        System.out.println("\n" + ANSI_RED + "Total Cost  = " + cost + ANSI_RESET);
     }
 
-// Method For Altering Order
+    // Method For Altering Order
 
     void Del(LinkedList<MenuCard> Order) {
+
         int count = 0;
         int odno;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("##############################################\n");
-        for (MenuCard l : Order) {
-            System.out.println(count++ + " - " + ANSI_YELLOW + "Dish : " + l.DishName + ANSI_RESET + " ---- " + ANSI_RED
-                    + "Price : " + l.Price + ANSI_RESET);
+        if (Order.size() == 0) {
+            System.out.println("Your List is Empty");
+
+        } else {
+
+            for (MenuCard l : Order) {
+                System.out.println(count++ + " - " + ANSI_YELLOW + "Dish : " + l.DishName + ANSI_RESET + " ---- "
+                        + ANSI_RED + "Price : " + l.Price + ANSI_RESET);
+            }
+            System.out.println("Enter Number to remove order");
+            try {
+                odno = Integer.parseInt(in.readLine());
+                if(odno <= Order.size()-1 && odno >= 0)
+                {
+                    Order.remove(odno);
+                    System.out.println(ANSI_GREEN + "Your Order is Altered" + ANSI_RESET);
+                }
+                else{
+                    System.out.println(ANSI_RED +"Invalid Input" + ANSI_RESET);
+                    
+                } 
+               
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+           
         }
-        System.out.println("Enter Number to remove order");
-        try {
-            odno = Integer.parseInt(in.readLine());
-            Order.remove(odno);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        System.out.println(ANSI_GREEN + "Your Order is Altered" + ANSI_RESET);
+
+        
     }
 
-// Main Mehod
+    // Main Mehod
 
     public static void main(String[] args) {
         // pre define menu list
@@ -121,7 +142,6 @@ public class MenuProgram {
 
             System.out.println("\n \n");
 
-           
             System.out.println("####################################################\n");
             System.out.println(ANSI_PURPLE + "1 : To Choose Order" + ANSI_RESET);
             System.out.println(ANSI_PURPLE + "2 : To check Order" + ANSI_RESET);
